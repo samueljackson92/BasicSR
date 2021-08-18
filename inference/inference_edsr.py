@@ -14,10 +14,10 @@ def main():
         '--model_path',
         type=str,
         default=  # noqa: E251
-        'experiments/pretrained_models/ESRGAN/ESRGAN_SRx3_DF2KOST_official-ff704c30.pth'  # noqa: E501
+        'experiments/pretrained_models/EDSR/EDSR_Lx3_f256b32_DIV2K_official-3660f70d.pth'  # noqa: E501
     )
-    parser.add_argument('--input', type=str, default='datasets/Set14/LRbicx4', help='input test image folder')
-    parser.add_argument('--output', type=str, default='results/ESRGAN', help='output folder')
+    parser.add_argument('--input', type=str, default='datasets/Set14/LRbicx3', help='input test image folder')
+    parser.add_argument('--output', type=str, default='results/EDSR', help='output folder')
     args = parser.parse_args()
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -47,7 +47,7 @@ def main():
             output = output.data.squeeze().float().cpu().clamp_(0, 1).numpy()
             output = np.transpose(output[[2, 1, 0], :, :], (1, 2, 0))
             output = (output * 255.0).round().astype(np.uint8)
-            cv2.imwrite(os.path.join(args.output, f'{imgname}_ESRGAN.png'), output)
+            cv2.imwrite(os.path.join(args.output, f'{imgname}_EDSR.png'), output)
 
 
 if __name__ == '__main__':
